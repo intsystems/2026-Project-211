@@ -13,11 +13,11 @@
     </tr>
     <tr>
         <td align="left"> <b> Consultant </b> </td>
-        <td> Danila Chernousov, PhD/DSc </td>
+        <td> Danila Chernousov </td>
     </tr>
     <tr>
         <td align="left"> <b> Advisor </b> </td>
-        <td> Andrey Grabovoy, PhD/DSc </td>
+        <td> Andrey Grabovoy, PhD </td>
     </tr>
 </table>
 
