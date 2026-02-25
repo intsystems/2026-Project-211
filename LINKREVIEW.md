@@ -14,7 +14,7 @@
 |  | Estimating the effective dimension of large biological datasets using fisher separability analysis | 2019 | Luca Albergante, Jonathan Bac, and Andrei Zinovyev | https://arxiv.org/abs/1901.06328 | TODO | TODO |
 |  | Dimensionality-aware outlier detection. | 2024 | Alastair Anderberg, James Bailey, Ricardo JGB Campello, Michael E Houle, Henrique O Marques, Miloš Radovanovic, and Arthur Zimek. | https://arxiv.org/abs/2401.05453 | TODO | TODO |
 |  | Reverse-time diffusion equation models | 1982 | Brian DO Anderson | https://www.sciencedirect.com/science/article/pii/0304414982900515 | TODO | TODO |
-|  | Intrinsic dimension of data representations in deep neural networks | 2019 | Alessio Ansuini, Alessandro Laio, Jakob H Macke, and Davide Zoccolan.  | TODO | TODO | TODO |
+|  | Intrinsic dimension of data representations in deep neural networks | 2019 | Alessio Ansuini, Alessandro Laio, Jakob H Macke, and Davide Zoccolan.  | https://arxiv.org/abs/1905.12784 | TODO | TODO |
 |  | cikitDimension: A Python Package for Intrinsic Dimension Estimation | 2021 | Jonathan Bac, Evgeny M. Mirkes, Alexander N. Gorban, Ivan Tyukin, and Andrei Zinovyev | TODO | TODO | TODO |
 |  | Intrinsic dimension, persistent homology and generalization in neural networks | 2021 | Tolga Birdal, Aaron Lou, Leonidas J Guibas, and Umut Simsekli | TODO | TODO | TODO |
 |  | Relating regularization and generalization through the intrinsic dimension of activations.  | 2022 | Bradley CA Brown, Jordan Juravsky, Anthony L Caterini, and Gabriel Loaiza-Ganem | TODO | TODO | TODO |
