@@ -10,3 +10,23 @@
 | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
 | Topic #1 | Paper Title | Publishing Year | Author #1 et al. | [arXiv/DOI]() | [GitHub]() | Short summary to be inserted in the Related Work section |
 |  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | TODO | TODO | TODO | TODO | TODO | TODO |
