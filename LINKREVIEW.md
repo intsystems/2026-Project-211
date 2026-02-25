@@ -10,7 +10,7 @@
 | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
 | Topic #1 | Paper Title | Publishing Year | Author #1 et al. | [arXiv/DOI]() | [GitHub]() | Short summary to be inserted in the Related Work section |
 |  | A Geometric View of Data Complexity: Efficient Local Intrinsic Dimension Estimation with Diffusion Models | 2024 | Hamidreza Kamkari, Brendan Leigh Ross, Rasa Hosseinzadeh, Jesse C. Cresswell, Gabriel Loaiza-Ganem | https://arxiv.org/abs/2406.03537 | TODO | TODO |
-|  | TODO | TODO | TODO | https://arxiv.org/abs/2212.12611 | TODO | TODO |
+|  | Your diffusion model secretly knows the dimension of the data manifold | 2023 | Jan Stanczuk, Georgios Batzolis, Teo Deveney, Carola-Bibiane Schönlieb | https://arxiv.org/abs/2212.12611 | TODO | TODO |
 |  | Estimating the effective dimension of large biological datasets using fisher separability analysis | 2019 | Luca Albergante, Jonathan Bac, and Andrei Zinovyev | TODO | TODO | TODO |
 |  | Dimensionality-aware outlier detection. | 2024 | Alastair Anderberg, James Bailey, Ricardo JGB Campello, Michael E Houle, Henrique O Marques, Miloš Radovanovic, and Arthur Zimek. | TODO | TODO | TODO |
 |  | Reverse-time diffusion equation models | 1982 | Brian DO Anderson | TODO | TODO | TODO |
@@ -29,4 +29,3 @@
 |  | Intrinsic dimension estimation of data by principal component analysis.  | 2010 | Mingyu Fan, Nannan Gu, Hong Qiao, and Bo Zhang.  | TODO | TODO | TODO |
 |  | An algorithm for finding intrinsic dimensionality of data. | 1971 | K. Fukunaga and D.R. Olsen. | TODO | TODO | TODO |
 |  | utomatic choice of dimensionality for pca. In T. Leen, T. Dietterich, and V. Tresp, editors, Advances in Neural Information Processing Systems, volume 13 | 2000 | Thomas Minka. | TODO | TODO | TODO |
-|  | Your diffusion model secretly knows the dimension of the data manifold | 2022 | Jan Stanczuk, Georgios Batzolis, Teo Deveney, and Carola-Bibiane Schönlieb.  | TODO | TODO | TODO |
