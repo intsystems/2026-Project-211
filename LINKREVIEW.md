@@ -18,13 +18,13 @@
 |  | cikitDimension: A Python Package for Intrinsic Dimension Estimation | 2021 | Jonathan Bac, Evgeny M. Mirkes, Alexander N. Gorban, Ivan Tyukin, and Andrei Zinovyev | TODO | TODO | TODO |
 |  | Intrinsic dimension, persistent homology and generalization in neural networks | 2021 | Tolga Birdal, Aaron Lou, Leonidas J Guibas, and Umut Simsekli | TODO | TODO | TODO |
 |  | Relating regularization and generalization through the intrinsic dimension of activations.  | 2022 | Bradley CA Brown, Jordan Juravsky, Anthony L Caterini, and Gabriel Loaiza-Ganem | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | Verifying the union of manifolds hypothesis for image data.  | 2023 | Bradley CA Brown, Anthony L Caterini, Brendan Leigh Ross, Jesse C Cresswell, and Gabriel LoaizaGanem | TODO | TODO | TODO |
+|  | Fast generation of calorimeter showers with density estimation on learned manifolds. | 2022 | Jesse C Cresswell, Brendan Leigh Ross, Gabriel Loaiza-Ganem, Humberto Reyes-Gonzalez, Marco Letizia, and Anthony L Caterini. | TODO | TODO | TODO |
+|  | Convergence of denoising diffusion models under the manifold hypothesis. | 2022 | Valentin De Bortoli.| TODO | TODO | TODO |
+|  | On gauge freedom, conservativity and intrinsic dimensionality estimation in diffusion models | 2024 | Christian Horvat and Jean-Pascal Pfister | TODO | TODO | TODO |
+|  | On the correlation between local intrinsic dimensionality and outlierness.  | 2018 | Michael E Houle, Erich Schubert, and Arthur Zimek. | TODO | TODO | TODO |
+|  | Diagnosing and fixing manifold overfitting in deep generative models.  | 2022 | Gabriel Loaiza-Ganem, Brendan Leigh Ross, Jesse C Cresswell, and Anthony L. Caterini.  | TODO | TODO | TODO |
+|  | Deep generative models through the lens of the manifold hypothesis: A survey and new connections. | 2024 | Gabriel Loaiza-Ganem, Brendan Leigh Ross, Rasa Hosseinzadeh, Anthony L Caterini, and Jesse C Cresswell.  | TODO | TODO | TODO |
 |  | TODO | TODO | TODO | TODO | TODO | TODO |
 |  | TODO | TODO | TODO | TODO | TODO | TODO |
 |  | TODO | TODO | TODO | TODO | TODO | TODO |
