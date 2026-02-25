@@ -25,8 +25,8 @@
 |  | On the correlation between local intrinsic dimensionality and outlierness.  | 2018 | Michael E Houle, Erich Schubert, and Arthur Zimek. | TODO | TODO | TODO |
 |  | Diagnosing and fixing manifold overfitting in deep generative models.  | 2022 | Gabriel Loaiza-Ganem, Brendan Leigh Ross, Jesse C Cresswell, and Anthony L. Caterini.  | TODO | TODO | TODO |
 |  | Deep generative models through the lens of the manifold hypothesis: A survey and new connections. | 2024 | Gabriel Loaiza-Ganem, Brendan Leigh Ross, Rasa Hosseinzadeh, Anthony L Caterini, and Jesse C Cresswell.  | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
-|  | TODO | TODO | TODO | TODO | TODO | TODO |
+|  | Estimating the intrinsic dimension of data with a fractal-based method | 2022 | F. Camastra and A. Vinciarelli. | TODO | TODO | TODO |
+|  | Intrinsic dimension estimation of data by principal component analysis.  | 2010 | Mingyu Fan, Nannan Gu, Hong Qiao, and Bo Zhang.  | TODO | TODO | TODO |
+|  | An algorithm for finding intrinsic dimensionality of data. | 1971 | K. Fukunaga and D.R. Olsen. | TODO | TODO | TODO |
+|  | utomatic choice of dimensionality for pca. In T. Leen, T. Dietterich, and V. Tresp, editors, Advances in Neural Information Processing Systems, volume 13 | 2000 | Thomas Minka. | TODO | TODO | TODO |
+|  | Your diffusion model secretly knows the dimension of the data manifold | 2022 | Jan Stanczuk, Georgios Batzolis, Teo Deveney, and Carola-Bibiane Schönlieb.  | TODO | TODO | TODO |
