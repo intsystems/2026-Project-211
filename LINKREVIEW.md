@@ -9,12 +9,12 @@
 | Topic | Title | Year | Authors | Paper | Code | Summary |
 | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
 | Topic #1 | Paper Title | Publishing Year | Author #1 et al. | [arXiv/DOI]() | [GitHub]() | Short summary to be inserted in the Related Work section |
-|  | A Geometric View of Data Complexity: Efficient Local Intrinsic Dimension Estimation with Diffusion Models | 2024 | Hamidreza Kamkari, Brendan Leigh Ross, Rasa Hosseinzadeh, Jesse C. Cresswell, Gabriel Loaiza-Ganem | https://arxiv.org/abs/2406.03537 | TODO | TODO |
-|  | Your diffusion model secretly knows the dimension of the data manifold | 2023 | Jan Stanczuk, Georgios Batzolis, Teo Deveney, Carola-Bibiane Schönlieb | https://arxiv.org/abs/2212.12611 | TODO | TODO |
-|  | Estimating the effective dimension of large biological datasets using fisher separability analysis | 2019 | Luca Albergante, Jonathan Bac, and Andrei Zinovyev | https://arxiv.org/abs/1901.06328 | TODO | TODO |
-|  | Dimensionality-aware outlier detection. | 2024 | Alastair Anderberg, James Bailey, Ricardo JGB Campello, Michael E Houle, Henrique O Marques, Miloš Radovanovic, and Arthur Zimek. | https://arxiv.org/abs/2401.05453 | TODO | TODO |
+|  | A Geometric View of Data Complexity: Efficient Local Intrinsic Dimension Estimation with Diffusion Models | 2024 | Hamidreza Kamkari, Brendan Leigh Ross, Rasa Hosseinzadeh, Jesse C. Cresswell, Gabriel Loaiza-Ganem | [arXiv:2406.03537](https://arxiv.org/abs/2406.03537) | TODO | TODO |
+|  | Your diffusion model secretly knows the dimension of the data manifold | 2023 | Jan Stanczuk, Georgios Batzolis, Teo Deveney, Carola-Bibiane Schönlieb | [arXiv:2212.12611](https://arxiv.org/abs/2212.12611) | TODO | TODO |
+|  | Estimating the effective dimension of large biological datasets using fisher separability analysis | 2019 | Luca Albergante, Jonathan Bac, and Andrei Zinovyev | [arXiv:1901.06328](https://arxiv.org/abs/1901.06328) | TODO | TODO |
+|  | Dimensionality-aware outlier detection. | 2024 | Alastair Anderberg, James Bailey, Ricardo JGB Campello, Michael E Houle, Henrique O Marques, Miloš Radovanovic, and Arthur Zimek. | [arXiv:2401.05453](https://arxiv.org/abs/2401.05453) | TODO | TODO |
 |  | Reverse-time diffusion equation models | 1982 | Brian DO Anderson | https://www.sciencedirect.com/science/article/pii/0304414982900515 | TODO | TODO |
-|  | Intrinsic dimension of data representations in deep neural networks | 2019 | Alessio Ansuini, Alessandro Laio, Jakob H Macke, and Davide Zoccolan.  | https://arxiv.org/abs/1905.12784 | TODO | TODO |
+|  | Intrinsic dimension of data representations in deep neural networks | 2019 | Alessio Ansuini, Alessandro Laio, Jakob H Macke, and Davide Zoccolan.  | [arXiv:1905.12784](https://arxiv.org/abs/1905.12784) | TODO | TODO |
 |  | cikitDimension: A Python Package for Intrinsic Dimension Estimation | 2021 | Jonathan Bac, Evgeny M. Mirkes, Alexander N. Gorban, Ivan Tyukin, and Andrei Zinovyev | [arXiv:2109.02596](https://arxiv.org/abs/2109.02596) | TODO | TODO |
 |  | Intrinsic dimension, persistent homology and generalization in neural networks | 2021 | Tolga Birdal, Aaron Lou, Leonidas J Guibas, and Umut Simsekli | [arXiv:2111.13171](https://arxiv.org/abs/2111.13171) | TODO | TODO |
 |  | Relating regularization and generalization through the intrinsic dimension of activations.  | 2022 | Bradley CA Brown, Jordan Juravsky, Anthony L Caterini, and Gabriel Loaiza-Ganem | [arXiv:2211.13239](https://arxiv.org/abs/2211.13239) | TODO | TODO |
