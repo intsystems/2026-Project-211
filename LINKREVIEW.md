@@ -19,11 +19,11 @@
 |  | Intrinsic dimension, persistent homology and generalization in neural networks | 2021 | Tolga Birdal, Aaron Lou, Leonidas J Guibas, and Umut Simsekli | [arXiv:2111.13171](https://arxiv.org/abs/2111.13171) | TODO | TODO |
 |  | Relating regularization and generalization through the intrinsic dimension of activations.  | 2022 | Bradley CA Brown, Jordan Juravsky, Anthony L Caterini, and Gabriel Loaiza-Ganem | [arXiv:2211.13239](https://arxiv.org/abs/2211.13239) | TODO | TODO |
 |  | Verifying the union of manifolds hypothesis for image data.  | 2023 | Bradley CA Brown, Anthony L Caterini, Brendan Leigh Ross, Jesse C Cresswell, and Gabriel LoaizaGanem | [arXiv:2207.02862](https://arxiv.org/abs/2207.02862) | TODO | TODO |
-|  | Fast generation of calorimeter showers with density estimation on learned manifolds. | 2022 | Jesse C Cresswell, Brendan Leigh Ross, Gabriel Loaiza-Ganem, Humberto Reyes-Gonzalez, Marco Letizia, and Anthony L Caterini. | TODO | TODO | TODO |
-|  | Convergence of denoising diffusion models under the manifold hypothesis. | 2022 | Valentin De Bortoli.| TODO | TODO | TODO |
-|  | On gauge freedom, conservativity and intrinsic dimensionality estimation in diffusion models | 2024 | Christian Horvat and Jean-Pascal Pfister | TODO | TODO | TODO |
-|  | On the correlation between local intrinsic dimensionality and outlierness.  | 2018 | Michael E Houle, Erich Schubert, and Arthur Zimek. | TODO | TODO | TODO |
-|  | Diagnosing and fixing manifold overfitting in deep generative models.  | 2022 | Gabriel Loaiza-Ganem, Brendan Leigh Ross, Jesse C Cresswell, and Anthony L. Caterini.  | TODO | TODO | TODO |
+|  | Fast generation of calorimeter showers with density estimation on learned manifolds. | 2022 | Jesse C Cresswell, Brendan Leigh Ross, Gabriel Loaiza-Ganem, Humberto Reyes-Gonzalez, Marco Letizia, and Anthony L Caterini. | [arXiv:2211.15380](https://arxiv.org/abs/2211.15380) | TODO | TODO |
+|  | Convergence of denoising diffusion models under the manifold hypothesis. | 2022 | Valentin De Bortoli.| [arXiv:2208.05314](https://arxiv.org/abs/2208.05314) | TODO | TODO |
+|  | On gauge freedom, conservativity and intrinsic dimensionality estimation in diffusion models | 2024 | Christian Horvat and Jean-Pascal Pfister | [arXiv:2402.03845](https://arxiv.org/abs/2402.03845) | TODO | TODO |
+|  | On the correlation between local intrinsic dimensionality and outlierness.  | 2018 | Michael E Houle, Erich Schubert, and Arthur Zimek. | https://link.springer.com/chapter/10.1007/978-3-030-02224-2_14 | TODO | TODO |
+|  | Diagnosing and fixing manifold overfitting in deep generative models.  | 2022 | Gabriel Loaiza-Ganem, Brendan Leigh Ross, Jesse C Cresswell, and Anthony L. Caterini.  | [arXiv:2204.07172](https://arxiv.org/abs/2204.07172) | TODO | TODO |
 |  | Deep generative models through the lens of the manifold hypothesis: A survey and new connections. | 2024 | Gabriel Loaiza-Ganem, Brendan Leigh Ross, Rasa Hosseinzadeh, Anthony L Caterini, and Jesse C Cresswell.  | TODO | TODO | TODO |
 |  | Estimating the intrinsic dimension of data with a fractal-based method | 2022 | F. Camastra and A. Vinciarelli. | TODO | TODO | TODO |
 |  | Intrinsic dimension estimation of data by principal component analysis.  | 2010 | Mingyu Fan, Nannan Gu, Hong Qiao, and Bo Zhang.  | TODO | TODO | TODO |
