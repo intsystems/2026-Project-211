@@ -16,9 +16,9 @@
 |  | Reverse-time diffusion equation models | 1982 | Brian DO Anderson | https://www.sciencedirect.com/science/article/pii/0304414982900515 | TODO | TODO |
 |  | Intrinsic dimension of data representations in deep neural networks | 2019 | Alessio Ansuini, Alessandro Laio, Jakob H Macke, and Davide Zoccolan.  | https://arxiv.org/abs/1905.12784 | TODO | TODO |
 |  | cikitDimension: A Python Package for Intrinsic Dimension Estimation | 2021 | Jonathan Bac, Evgeny M. Mirkes, Alexander N. Gorban, Ivan Tyukin, and Andrei Zinovyev | [arXiv:2109.02596](https://arxiv.org/abs/2109.02596) | TODO | TODO |
-|  | Intrinsic dimension, persistent homology and generalization in neural networks | 2021 | Tolga Birdal, Aaron Lou, Leonidas J Guibas, and Umut Simsekli | TODO | TODO | TODO |
-|  | Relating regularization and generalization through the intrinsic dimension of activations.  | 2022 | Bradley CA Brown, Jordan Juravsky, Anthony L Caterini, and Gabriel Loaiza-Ganem | TODO | TODO | TODO |
-|  | Verifying the union of manifolds hypothesis for image data.  | 2023 | Bradley CA Brown, Anthony L Caterini, Brendan Leigh Ross, Jesse C Cresswell, and Gabriel LoaizaGanem | TODO | TODO | TODO |
+|  | Intrinsic dimension, persistent homology and generalization in neural networks | 2021 | Tolga Birdal, Aaron Lou, Leonidas J Guibas, and Umut Simsekli | [arXiv:2111.13171](https://arxiv.org/abs/2111.13171) | TODO | TODO |
+|  | Relating regularization and generalization through the intrinsic dimension of activations.  | 2022 | Bradley CA Brown, Jordan Juravsky, Anthony L Caterini, and Gabriel Loaiza-Ganem | [arXiv:2211.13239](https://arxiv.org/abs/2211.13239) | TODO | TODO |
+|  | Verifying the union of manifolds hypothesis for image data.  | 2023 | Bradley CA Brown, Anthony L Caterini, Brendan Leigh Ross, Jesse C Cresswell, and Gabriel LoaizaGanem | [arXiv:2207.02862](https://arxiv.org/abs/2207.02862) | TODO | TODO |
 |  | Fast generation of calorimeter showers with density estimation on learned manifolds. | 2022 | Jesse C Cresswell, Brendan Leigh Ross, Gabriel Loaiza-Ganem, Humberto Reyes-Gonzalez, Marco Letizia, and Anthony L Caterini. | TODO | TODO | TODO |
 |  | Convergence of denoising diffusion models under the manifold hypothesis. | 2022 | Valentin De Bortoli.| TODO | TODO | TODO |
 |  | On gauge freedom, conservativity and intrinsic dimensionality estimation in diffusion models | 2024 | Christian Horvat and Jean-Pascal Pfister | TODO | TODO | TODO |
