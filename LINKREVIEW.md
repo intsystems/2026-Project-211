@@ -9,8 +9,7 @@
 | Topic | Title | Year | Authors | Paper | Code | Summary |
 | :--- | :--- | :---: | :--- | :---: | :---: | :--- |
 | Topic #1 | Paper Title | Publishing Year | Author #1 et al. | [arXiv/DOI]() | [GitHub]() | Short summary to be inserted in the Related Work section |
-|  | A Geometric View of Data Complexity: Efficient Local Intrinsic Dimension Estimation with Diffusion Models | 2024 | Hamidreza Kamkari, Brendan Leigh Ross, Rasa Hosseinzadeh, Jesse C. Cresswell, Gabriel Loaiza-Ganem | [arXiv:2406.03537](https://arxiv.org/abs/2406.03537) | TODO | 
-FLIPD is a new method that efficiently and accurately estimates data complexity by leveraging diffusion models, outperforming existing approaches while being orders of magnitude faster.|
+|  | A Geometric View of Data Complexity: Efficient Local Intrinsic Dimension Estimation with Diffusion Models | 2024 | Hamidreza Kamkari, Brendan Leigh Ross, Rasa Hosseinzadeh, Jesse C. Cresswell, Gabriel Loaiza-Ganem | [arXiv:2406.03537](https://arxiv.org/abs/2406.03537) | TODO | FLIPD is a new method that efficiently and accurately estimates data complexity by leveraging diffusion models, outperforming existing approaches while being orders of magnitude faster.|
 |  | Your diffusion model secretly knows the dimension of the data manifold | 2023 | Jan Stanczuk, Georgios Batzolis, Teo Deveney, Carola-Bibiane Schönlieb | [arXiv:2212.12611](https://arxiv.org/abs/2212.12611) | TODO | TODO |
 |  | Estimating the effective dimension of large biological datasets using fisher separability analysis | 2019 | Luca Albergante, Jonathan Bac, and Andrei Zinovyev | [arXiv:1901.06328](https://arxiv.org/abs/1901.06328) | TODO | TODO |
 |  | Dimensionality-aware outlier detection. | 2024 | Alastair Anderberg, James Bailey, Ricardo JGB Campello, Michael E Houle, Henrique O Marques, Miloš Radovanovic, and Arthur Zimek. | [arXiv:2401.05453](https://arxiv.org/abs/2401.05453) | TODO | TODO |
