@@ -62,10 +62,10 @@
   Moscow, Russia\\
   \texttt{email@phystech.edu}\\
   \And
-  Name Surname\\
+  Kirill Zolotarev\\
   MIPT\\
   Moscow, Russia\\
-  \texttt{email@phystech.edu}\\
+  \texttt{k.a.zolotarev@phystech.edu}\\
 }
 
 
@@ -75,23 +75,99 @@
 \maketitle
 
 \begin{abstract}
-    TODO
+    Data complexity estimation is a relevant problem in data analysis. Existing methods often assume linear scaling of complexity with sample size, but this approach fails to account for the intrinsic structure of data lying on manifolds. To derive a measure of data complexity, we propose leveraging the properties of diffusion models, which can be used to recover the geometry of the data distribution. The novelty lies in abandoning the linear assumption and analyzing complexity based on manifold characteristics such as local dimension and curvature. The proposed method enables meaningful comparison of dataset complexity (e.g., MNIST vs. CIFAR-10), demonstrating, for instance, that duplicating points does not increase complexity. Furthermore, generative models already operate near its upper bound.
 \end{abstract}
 
-\textbf{Keywords:} TODO
+\textbf{Keywords:} data complexity, intrinsic dimension, manifold learning, diffusion models, curvature, dataset comparison, generative models, local intrinsic dimensionality
 
 \section{Introduction}\label{sec:intro}
 
-TODO
+Assessing data complexity is a critical issue in modern data analysis and machine learning. Understanding the complexity of a dataset is crucial for choosing a model architecture, preventing overfitting, and explaining the generalization ability of neural networks. There is no universal answer to the question of data complexity. Traditional approaches often rely on linear scaling of complexity with sample size, which does not reflect the real structure of data, which is typically concentrated near low-dimensional manifolds embedded in a high-dimensional space. The goal of this paper is to construct a measure of data complexity that takes into account the interrelations in the distribution of sample points and reflects the geometry of the underlying distribution, not just the local properties of individual points.
 
-\textbf{Contributions.} Our contributions can be summarized as follows:
+The object of this study is the intrinsic dimension of data—the minimum number of parameters necessary to describe a dataset without significant loss of information. In manifold theory terms, intrinsic dimension corresponds to the dimension of the manifold on which the data distribution is concentrated—the more local factors of variation present in the data, the higher its intrinsic dimension and the more complex the distribution structure.
+
+The main problem with existing approaches to assessing data complexity lies in their local nature. Most modern methods, including popular Local Intrinsic Dimension (LID) estimators, focus on analyzing the neighborhood of a single point. They do not characterize the entire data distribution. Moreover, classical methods often assume a linear scaling of complexity with sample size, leading to paradoxical results: duplicating points (copying existing observations) increases the complexity estimate, even though the distribution structure remains unchanged. This contradicts the understanding of complexity and limits the applicability of such measures for comparing datasets.
+An additional complication arises from the nonlinear nature of real data. Methods based on linear assumptions (e.g., PCA) are unable to capture the curvature of the manifold and overestimate dimensionality in the presence of nonlinear relationships. Existing nonlinear approaches either require tuning numerous parameters or are computationally expensive and do not scale to large data sets.
+
+To achieve the goal to create the data complexity mesure, the following tasks must be addressed:
 \begin{itemize}
-    \item We present...
-    \item We demonstrate the validity of our theoretical results through empirical studies...
-    \item We highlight the implications of our findings for...
+    \item Develop a theoretical foundation for a complexity measure that takes into account the global structure of the data distribution, not just local properties.
+    \item Propose a complexity assessment method based on diffusion models, leveraging their ability to reconstruct the distribution geometry through the gradient of the logarithm of the density (score function).
+    \item Implement a computational algorithm for evaluating the proposed complexity measure for real-world datasets.
+    \item Conduct experimental validation of the method on synthetic data with known intrinsic dimensionality and on real images.
 \end{itemize}
 
+
+The proposed solution involves constructing a data complexity measure based on an analysis of the distribution geometry reconstructed using diffusion models. Diffusion models are trained to approximate the gradient of the logarithm of the density (score function)—a vector field that, at low noise levels, indicates a direction in the data manifold orthogonal to the tangent space. By analyzing this vector field, one can obtain information not only about the local dimension but also about the curvature of the manifold.
+
+
 \textbf{Outline.} The rest of the paper is organized as follows...
+
+\section{Problem Statement}
+
+In machine learning problems, as mentioned above, it is important to understand the complexity of the data, which can have a very complex structure. A measure is needed that reflects the geometric properties of the generative distribution: the manifold's dimension, its curvature, the presence of nonlinear dependencies, etc. Moreover, the measure must be invariant to minor data transformations (rotations, translations, scaling) and to duplication of observations, since copying points does not change the distribution's structure.
+
+More formally:
+
+\subsection{Elements of problem statement}
+Let a sample 
+\( S = \{\mathbf{x}_1, \mathbf{x}_2, \dots, \mathbf{x}_n\} \) 
+be given, where each element \( \mathbf{x}_i \in \mathbb{R}^D \). 
+It is assumed that the observations are independent realizations of a random vector with distribution 
+\( P \), concentrated near some low-dimensional manifold 
+\( \mathcal{M} \subset \mathbb{R}^D \) (possibly with additive noise). 
+The true dimension of the manifold \( d = \dim(\mathcal{M}) \) is unknown and may vary across different regions.
+
+We aim to construct a function \( C(S) \) that estimates the complexity of the distribution \( P \) and satisfies the following natural requirements:
+
+\begin{enumerate}
+    \item \textbf{Invariance to permutations:} 
+    \( C(\{\mathbf{x}_{\pi(1)}, \dots, \mathbf{x}_{\pi(n)}\}) = C(S) \) for any permutation \( \pi \).
+
+    \item \textbf{Invariance to isometries:} 
+    \( C(\{R\mathbf{x}_i + \mathbf{t}\}) = C(S) \) for any orthogonal matrix \( R \) and translation vector \( \mathbf{t} \).
+
+    \item \textbf{Invariance to scaling:} 
+    \( C(\{\alpha \mathbf{x}_i\}) = C(S) \) for any \( \alpha > 0 \).
+
+    \item \textbf{Invariance to duplication:} 
+    If \( S' = S \cup \{\mathbf{x}_j\} \), where \( \mathbf{x}_j \in S \), then \( C(S') = C(S) \). 
+    More generally, adding any number of copies of existing points does not change the value of the measure.
+
+    \item \textbf{Stability:} 
+    Small perturbations of the points (e.g., adding bounded noise) lead to small changes in \( C(S) \).
+
+    \item \textbf{Consistency:} 
+    As \( n \to \infty \), the value \( C(S) \) should converge to some characteristic of the true distribution \( P \) 
+    (e.g., the average local dimension or integral curvature).
+
+    \item \textbf{Monotonicity (desirable):} 
+    If the distribution \( P_1 \) is concentrated on a submanifold \( \mathcal{M}_1 \), and \( P_2 \) on \( \mathcal{M}_2 \), 
+    with \( \mathcal{M}_1 \subset \mathcal{M}_2 \) in some reasonable sense, then \( C(P_1) \le C(P_2) \). 
+\end{enumerate}
+
+
+\subsection{Model and Method}
+To estimate complexity, we propose using diffusion probabilistic models. A diffusion model is trained to approximate the gradient of the log-density (score function) of the noisy distribution:
+\[
+\mathbf{s}_\theta(\mathbf{x}, t) \approx \nabla_{\mathbf{x}} \log p_t(\mathbf{x}),
+\]
+where $p_t$ is the distribution of the diffusion process at time $t \in [0, T]$. 
+After training, we obtain a parametric model $\mathbf{s}_\theta$ that carries information about the geometry of the distribution. In particular, for small noise levels, the vector $\mathbf{s}_\theta(\mathbf{x}, t)$ points in the direction orthogonal to the tangent space of the manifold $\mathcal{M}$ at point $\mathbf{x}$, provided $\mathbf{x}$ is close to $\mathcal{M}$. Analysis of this vector field allows us to estimate local dimension and curvature.
+
+\subsection{The Desired Complexity Measure}
+Let $\hat{P}$ denote the empirical distribution corresponding to the sample $S$. We define the complexity measure as a functional of the trained diffusion model:
+\[
+C(S) = \Phi( \{ \mathbf{x}_i \}, \mathbf{s}_\theta ),
+\]
+where $\Phi$ is some algorithm that extracts a global characteristic from local geometric properties. 
+
+\subsection{Definitions}
+\begin{itemize}
+    \item \textbf{Model} is a parametric family of functions $\mathbf{s}_\theta(\mathbf{x}, t)$ approximating the gradient of the log-density.
+    \item \textbf{Solution} is the value of the complexity measure $C(S)$ computed for a given sample.
+    \item \textbf{Algorithm} is a sequence of steps: training a diffusion model on $S$, extracting the necessary characteristics from $\mathbf{s}_\theta$, and computing the final number.
+\end{itemize}
 
 \section{Related Work}\label{sec:rw}
 
