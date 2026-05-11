@@ -1,0 +1,418 @@
+\documentclass{article}
+\newcommand{\M}{\mathcal{M}}
+
+\PassOptionsToPackage{numbers, sort, compress}{natbib}
+\usepackage[main,final]{neurips_2025}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+
+%%%
+
+\usepackage{subcaption}
+\newcommand{\inner}[2]{\langle #1, #2 \rangle}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{manyfoot}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+\usepackage{listings}
+
+\newtheorem{theorem}{Theorem} % continuous numbers
+%%\newtheorem{theorem}{Theorem}[section] % sectionwise numbers
+%% optional argument [theorem] produces theorem numbering sequence instead of independent numbers for Proposition
+\newtheorem{proposition}[theorem]{Proposition}% 
+\newtheorem{lemma}{Lemma}% 
+%%\newtheorem{proposition}{Proposition} % to get separate numbers for theorem and proposition etc.
+
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+
+%%%
+
+
+\title{Data Complexity via Data Geometry Using Generative Models}
+
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+
+\author{
+  Name Surname\\
+  MIPT\\
+  Moscow, Russia\\
+  \texttt{email@phystech.edu}\\
+  \And
+  Kirill Zolotarev\\
+  MIPT\\
+  Moscow, Russia\\
+  \texttt{k.a.zolotarev@phystech.edu}\\
+}
+
+
+\begin{document}
+
+
+\maketitle 
+
+
+
+\begin{abstract}
+Data complexity estimation is a relevant problem in data analysis. Existing methods often assume linear scaling of complexity with sample size, but this approach fails to account for the intrinsic structure of data lying on manifolds. To derive a measure of data complexity, we propose  the properties of diffusion models, which can be used to recover the geometry of the data distribution. The novelty lies in using score function field that defines a Riemannian metric; its Laplace–Beltrami heat kernel yields a positive semi-definite
+sample kernel that provides a powerful tool for constructing a data complexity measure and proving theorems about its properties.
+\end{abstract}
+
+\textbf{Keywords:} data complexity, diffusion models, intrinsic dimension, manifold learning, heat kernel, Laplace--Beltrami, score function, geometric deep learning
+
+\section{Introduction}\label{sec:intro}
+
+Dataset complexity should quantify the geometric organization of data rather than the number of observations alone. Modern datasets often contain many samples that are redundant, strongly correlated, or arranged on nonlinear low-dimensional structures. A useful complexity measure should therefore be global: it should aggregate relations across the whole sample while remaining sensitive to intrinsic dimension, curvature, connectivity, and duplication.
+
+\textbf{Related work: local geometry via diffusion.} Recent work shows that diffusion models encode local manifold information. Stanczuk et al. prove that, at small noise levels, the score of a diffusion model approximates directions normal to the data manifold and can be used to estimate intrinsic dimension \citep{stanczuk2024diffusion}. Kamkari et al. develop efficient local intrinsic dimension estimators from diffusion models and connect them to data complexity at the level of individual data points \citep{kamkari2024geometric}. These approaches are important local probes, but they do not directly produce a scalar complexity measure for an entire dataset.
+
+A prior route toward global complexity used probability-flow or diffusion trajectories to compare data points before applying a kernel-logdet functional. Such constructions are useful as motivation but make the geometry implicit and require path integration. We do not develop trajectory-based distances here. Instead, we retain positive semi-definite kernel framework and replace trajectory comparison by a heat kernel derived from the intrinsic geometry induced by the score.
+
+The field still lacks global geometric measures that are simultaneously compatible with modern diffusion models and equipped with clear algebraic guarantees. Local dimension estimators describe neighborhoods but do not measure redundancy between distant regions. Pointwise curvature or density statistics give useful diagnostics but do not by themselves produce a global complexity functional. A kernel spectrum, by contrast, can summarize how all sample elements interact.
+
+Classical alternatives have complementary limitations. PCA provides a global scalar spectrum, but it assumes linear structure and is insensitive to nonlinear manifold curvature. Local intrinsic dimension methods are nonlinear, but they are pointwise and require additional aggregation rules. Graph-based manifold learning methods capture connectivity, yet their output depends strongly on neighborhood choices, bandwidths, and sampling density unless carefully normalized.
+
+Diffusion maps provide a principled bridge between local kernels and global geometry \citep{coifman2006diffusion}. Berry and Sauer show that local anisotropic kernels can be designed so that their normalized graph operators converge to differential operators associated with a chosen Riemannian geometry \citep{berry2016local}. This makes it possible to transform a learned local metric into a global heat kernel on the sample.
+
+\textbf{Our approach} uses the log-determinant complexity functional - this classic tool from information theory guarantees the fulfillment of useful properties of a measure, for example, subadditivity. The present contribution is the construction of the kernel \(K\): we define a score-induced metric tensor, construct the Laplace--Beltrami heat kernel associated with this metric, discretize it using local kernels and diffusion-map normalization, and use the resulting positive semi-definite matrix in 
+\[
+C(X)=\log\det(I+K).
+\]
+
+The construction has two main advantages. First, it is global because the heat kernel integrates multi-scale connectivity over the entire sample. Second, it is geometric because the pairwise kernel is derived from a metric tensor rather than from an arbitrary distance. Its limitations are also clear: the method depends on the quality and scale of the learned score, on bandwidth selection in the kernel approximation, and on numerical spectral approximation for large datasets.
+
+\textbf{Outline.} The remainder of the paper formalizes the problem, defines the score-induced heat kernel, gives an algorithmic implementation, and states the properties inherited from the PSD-kernel.
+
+
+\section{Problem Statement}
+We are given a dataset \(X=\{x_1,\ldots,x_n\}\subset \mathbb{R}^D\). The observations are treated as samples from a distribution \(p\) concentrated near a compact \(d\)-dimensional smooth manifold \(\mathcal{M}\subset \mathbb{R}^D\), where \(d\leq D\) may be unknown and the sampling density may vary over \(\mathcal{M}\). 
+
+We assume that \(p\) has a smooth noise-regularized density at the analysis scale and that a trained diffusion model provides an estimator of the score field. At a fixed noise level \(\tau\), or after a prescribed aggregation over noise levels, we write
+\[
+\mathbf{s} (x)=\nabla_x\log p_\tau(x)
+\]
+for the ideal score and \(\mathbf{s}_\theta(x)\) for its learned approximation. The score is assumed sufficiently regular on a neighborhood of the data manifold for the metric construction below to be well defined.
+
+We define the scalar complexity measure
+\[
+C(X)=\log\det(I+K),\qquad K\in\mathbb{R}^{n\times n}\succeq 0,
+\]
+The objective is to construct the matrix \(K\) (via the heat kernel of the score‑induced metric) so that all the properties below hold under the given regularity assumptions.  
+
+\begin{enumerate}
+    \item \textbf{Permutation invariance:} $C(\{x_{\pi(i)}\})=C(X)$ for any permutation $\pi$.
+    \item \textbf{Rigid motion invariance:} $C(\{R x_i+t\})=C(X)$ for orthogonal $R$, vector $t$.
+    \item \textbf{Affine invariance:} $C(\{A x_i+b\})=C(X)$ after normalisation.
+    \item \textbf{Monotonicity:} $A\subseteq B \implies C(A)\le C(B)$.
+    \item \textbf{Subadditivity:} $C(A\cup B)\le C(A)+C(B)$.
+    \item \textbf{Submodularity:} $C(X\cup\{x\})-C(X)\ge C(X'\cup\{x\})-C(X')$ for $X\subseteq X'$, $x\notin X'$.
+\end{enumerate}
+    \textbf{Consistency for large \(n\):}
+    As \(n\to\infty\), the value \(C(X)\) should converge to a characteristic of the true underlying distribution \(p\) on the manifold \(\mathcal{M}\), such as an integral of the intrinsic dimension or a total curvature term derived from the score‑induced metric.
+
+Empirical validation on synthetic manifolds, MNIST, CIFAR‑style images, and controlled mixtures would then test whether \(C(X)\) indeed increases with intrinsic dimension and nonlinear organisation, remains stable under noise, and is unchanged under exact 
+
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Score Function}
+
+A score-based diffusion model learns a vector field proportional to the gradient of the log-density of a noise-perturbed data distribution. For the purpose of geometric analysis, we fix an analysis scale \(\tau\) and use
+\[
+\mathbf{s}(x)=\nabla_x \log p_\tau(x).
+\]
+At small noise levels, the score carries information about normal directions to the data manifold; at larger noise levels, it encodes coarser density geometry. The scale \(\tau\) is therefore a geometric resolution parameter.
+
+\subsection{Score-Induced Metric Tensor}
+
+Following the score-induced metric construction described by Perone \citep{perone2024scoremetric}, we define a Riemannian metric tensor in the ambient coordinates by
+\[
+g(x)=I_D-\frac{\mathbf{s}(x)\mathbf{s}(x)^{\top}}{1+||\mathbf{s}(x)||^2}.
+\]
+Equivalently, by the Sherman--Morrison identity,
+\[
+g(x)=\bigl(I_D+\mathbf{s}(x)\mathbf{s}(x)^{\top}\bigr)^{-1}.
+\]
+The metric is symmetric and positive definite. Its eigenvalue in the direction of \(\mathbf{s}(x)\) is \((1+||{\mathbf{s}(x)}||^2)^{-1}\), while its eigenvalues on the orthogonal complement are equal to \(1\). Thus the score direction is contracted and directions orthogonal to the score are preserved.
+
+For a tangent vector \(v\), the induced squared norm is
+\[
+||v||_{g(x)}^2
+=
+v^\top g(x)v
+=
+||v||^2
+-
+\frac{\inner{\mathbf{s}(x)}{v}^2}{1+||\mathbf{s}||^2}.
+\]
+This formula gives the geometric meaning of the construction. When the score is large, movement aligned with the density gradient is assigned smaller metric length; when the score vanishes, the metric becomes Euclidean. On the manifold, the restriction of \(g\) to \(T_x\M\) defines the intrinsic metric used in the heat equation.
+
+\subsection{Laplace--Beltrami Operator}
+
+The metric \(g\) induces a Riemannian volume form \(d\mathrm{vol}_g\) and the Laplace--Beltrami operator. In local coordinates, for a smooth function \(f\),
+\[
+\Delta_g f
+=
+\frac{1}{\sqrt{|g|}}
+\partial_i\!\left(\sqrt{|g|}\,g^{ij}\partial_j f\right),
+\]
+where \(|g|=\det(g_{ij})\), and \((g^{ij})\) denotes the inverse metric.
+
+On a compact manifold with standard boundary conditions, this operator is self-adjoint and nonnegative after multiplication by \(-1\).
+
+\subsection{Heat Equation and Heat Kernel}
+
+The heat equation associated with the score-induced geometry is
+\[
+\partial_t u(t,x)=\Delta_g u(t,x),
+\qquad
+u(0,x)=f(x).
+\]
+Its fundamental solution is the heat kernel \(h_t(x,y)\), characterized by
+\[
+u(t,x)=\int_{\M} h_t(x,y)f(y)d\mathrm{vol}_g(y).
+\]
+Spectral theory on a compact manifold gives the expansion
+\[
+h_t(x,y)=\sum_{\ell\geq 0} e^{-t\lambda_\ell}\,\phi_\ell(x)\,\phi_\ell(y),
+\]
+where \((\lambda_\ell,\phi_\ell)\) is the eigensystem of \(-\Delta_g\) and \(\{\phi_\ell\}\) is an orthonormal basis of \(L^2(\M,d\mathrm{vol}_g)\).
+
+\begin{lemma}[Positive semi-definiteness of the heat kernel]\label{lem:heat-psd}
+\end{lemma}
+
+\begin{proof}
+Substituting the spectral expansion of \(h_t\) and exchanging the finite and infinite sums, which is justified by uniform convergence of the heat kernel series on compact subsets for \(t>0\), we obtain
+\[
+\sum_{i,j=1}^{n}a_i a_j\, h_t(x_i,x_j)
+=
+\sum_{\ell\geq 0}e^{-t\lambda_\ell}
+\Bigl(\sum_{i=1}^{n}a_i\,\phi_\ell(x_i)\Bigr)^{\!2}.
+\]
+Each term in the outer sum is nonnegative, since \(e^{-t\lambda_\ell}>0\) and the inner sum is squared. Hence the total is nonnegative, which proves that \(H_t\succeq 0\).
+\end{proof}
+
+This property is the key reason the heat kernel is compatible with the log-determinant complexity framework.
+
+\subsection{Intuition} 
+
+\emph{What the score-induced metric encodes about distance.}
+The tensor \(g(x)\) contracts lengths along the score direction and preserves them on the orthogonal complement. Integrating along a curve, paths that traverse high-density regions accumulate less length, while paths through low-density -- more. Thus the geodesic distance \(d_g(x,y)\) is small whenever \(x\) and \(y\) can be connected through regions populated by data, and large whenever every connecting path must cross a low-density barrier. The induced geometry measures distance \emph{along} the data rather than through it.
+
+\emph{Why the log-determinant.}
+Given a PSD kernel matrix \(K\) with eigenvalues \(\sigma_i\geq 0\),
+\[
+C(X)=\log\det(I+K)=\sum_{i=1}^{n}\log(1+\sigma_i),
+\]
+aggregates the entire similarity spectrum on a logarithmic scale. Up to a constant, this equals the differential entropy of a Gaussian with covariance \(I+K\), so \(C(X)\) is the information content of the sample when interactions are encoded by \(K\).
+
+\emph{Asymptotics of the heat kernel.}
+Varadhan's formula \citep{varadhan1967short} gives
+\[
+h_t(x,y)\asymp (4\pi t)^{-d/2}\exp\!\bigl(-d_g(x,y)^2/4t\bigr)\quad\text{as }t\to 0^+,
+\]
+so at short times \(h_t\) is controlled by the intrinsic geodesic distance. At large times:
+\[
+h_t(x,y)\to\mathrm{vol}_g(\M)^{-1}
+\]
+and \(t\) interpolates between the two regimes. The scale \(t\) therefore acts as a geometric resolution parameter.
+
+\emph{How the combination works.}
+\(d_g\) specifies \emph{which} samples are close, \(h_t\) turns this geometry into a PSD similarity with a tunable scale, and \(\log\det(I+K_t)\) aggregates the similarities into a scalar. Redundant samples from the same mode are coupled strongly by \(h_t\) and contribute negligibly to \(C\), while samples from distinct modes or distinct branches of \(\M\) are nearly decoupled and contribute almost additively. The score-induced geometry thus controls \emph{what} is measured, and the log-determinant controls \emph{how} it is aggregated.
+\section{Properties}\label{sec:properties}
+
+In this section we show that the heat kernel of the score-induced geometry admits a consistent estimator from the sample \((X,\mathbf{s}_\theta)\) alone, and that the resulting discrete kernel inherits the positive semi-definiteness required by the complexity functional. The key tool is the local-kernel framework of Coifman and Lafon~\citep{coifman2006diffusion} generalized by Berry and Sauer~\citep{berry2016local}. We state the definitions needed for the sample-based construction, verify that the anisotropic kernel associated with our metric satisfies the moment conditions of the framework, and apply Theorem~4.7 of \citep{berry2016local} to conclude pointwise convergence of the discrete operator to \(\Delta_g\).
+
+\subsection{Local kernels and their moments}
+
+Throughout this subsection \(\M\subset\mathbb{R}^D\) is a compact smooth \(d\)-dimensional submanifold, and \(\{x_i\}_{i=1}^{n}\) is an i.i.d.\ sample from a smooth density \(q\) on \(\M\), bounded away from zero. We work in ambient coordinates.
+
+\begin{definition}[Local kernel; \citep{berry2016local}, Def.~3.1]\label{def:local-kernel}
+A function \(K_\epsilon:\M\times\M\to\mathbb{R}_{\geq 0}\) indexed by a bandwidth \(\epsilon>0\) is called a \emph{local kernel} if there exist constants \(c,\sigma>0\) and a vector field \(b:\M\to\mathbb{R}^D\) such that
+\[
+0\leq K_\epsilon(x,\,x+\sqrt{\epsilon}\,z)\leq c\,\exp\!\bigl(-\sigma\,\|z-\sqrt{\epsilon}\,b(x)\|^2\bigr)
+\qquad
+\text{for all }x\in\M,\ z\in\mathbb{R}^D.
+\]
+\end{definition}
+
+\begin{definition}[Moments of a local kernel; \citep{berry2016local}, Def.~3.2]\label{def:moments}
+The zeroth, first, and second moments of \(K_\epsilon\) on the tangent space \(T_x\M\), identified with \(\mathbb{R}^d\) via an orthonormal frame, are
+\begin{align*}
+m(x) &= \lim_{\epsilon\to 0}\int_{T_x\M}K_\epsilon(x,x+\sqrt\epsilon\,\hat z)\,dz,\\
+\mu_i(x) &= \lim_{\epsilon\to 0}\epsilon^{-1/2}\int_{T_x\M}z_i\,K_\epsilon(x,x+\sqrt\epsilon\,\hat z)\,dz,\\
+C_{ij}(x) &= \lim_{\epsilon\to 0}\int_{T_x\M}z_iz_j\,K_\epsilon(x,x+\sqrt\epsilon\,\hat z)\,dz,
+\end{align*}
+where \(\hat z\in\mathbb{R}^D\) denotes the embedding of \(z\in T_x\M\).
+\end{definition}
+
+\begin{remark}
+The moments $(m,\mu,C)$ fully determine the second-order differential operator obtained from $K_\epsilon$ in the limit $\epsilon\to 0$: the symmetric matrix \(C(x)\) plays the role of an inverse metric, and \(m(x)\) of a volume weight. This is the content of Lemma~3.9 in \citep{berry2016local}.
+\end{remark}
+
+\subsection{The score-induced anisotropic kernel}
+
+Recall that the score-induced metric is \(g(x)=\bigl(I_D+\mathbf{s}(x)\mathbf{s}(x)^\top\bigr)^{-1}\). We use its inverse \(A(x)=g(x)^{-1}=I_D+\mathbf{s}(x)\mathbf{s}(x)^\top\) as the shape matrix of an anisotropic kernel,
+\begin{equation}\label{eq:aniso-kernel}
+K_\epsilon(x,y)=\exp\!\Bigl(-\tfrac{1}{2\epsilon}\,(x-y)^\top A(x)^{-1}(x-y)\Bigr)
+=\exp\!\Bigl(-\tfrac{1}{2\epsilon}\,(x-y)^\top g(x)\,(x-y)\Bigr).
+\end{equation}
+For the symmetric double normalization below we use \(\bar K_\epsilon(x,y)=\tfrac{1}{2}\bigl(K_\epsilon(x,y)+K_\epsilon(y,x)\bigr)\).
+
+\begin{lemma}[Moments of the score-induced kernel]\label{lem:moments}
+Assume \(\mathbf{s}\in C^2(\M)\). Then \(K_\epsilon\) defined by \eqref{eq:aniso-kernel} is a local kernel in the sense of Definition~\ref{def:local-kernel}, and its moments on \(T_x\M\) are
+\[
+m(x)=(2\pi)^{d/2}\sqrt{|A_T(x)|},
+\qquad
+\mu(x)=0,
+\qquad
+C(x)=(2\pi)^{d/2}\sqrt{|A_T(x)|}\;A_T(x),
+\]
+where \(A_T(x)\in\mathbb{R}^{d\times d}\) is the representation of \(A(x)\) in an orthonormal basis of \(T_x\M\).
+\end{lemma}
+
+\begin{proof}
+The bound in Definition~\ref{def:local-kernel} with \(b = 0\), \(\sigma=\tfrac{1}{2\lambda_{\max}(A(x))}\), \(c=1\) follows because \(A(x)^{-1}=g(x)\) is positive definite and bounded on the compact set \(\M\). Hence \(K_\epsilon\) is a local kernel.
+
+For the moments, write \(y=x+\sqrt\epsilon\,\hat z\) with \(z\in T_x\M\cong\mathbb{R}^d\). Then
+\[
+K_\epsilon(x,x+\sqrt\epsilon\,\hat z)
+=\exp\!\Bigl(-\tfrac{1}{2}z^\top A_T(x)^{-1}z\Bigr)+O(\sqrt\epsilon),
+\]
+where the remainder accounts for the embedding curvature of \(\M\) and the smoothness of \(A\). Evaluating the three Gaussian integrals in Definition~\ref{def:moments} yields the stated moments. In particular, \(\mu\equiv 0\) and \(C(x)=m(x)\,A_T(x)\).
+\end{proof}
+
+\subsection{Convergence to the Laplace--Beltrami operator}
+
+We combine Lemma~\ref{lem:moments} with Theorem~4.7 of \citep{berry2016local}, which provides a sampling-density-invariant construction of \(\Delta_g\) from a symmetric local kernel. Let
+\[
+q_\epsilon(x_i)=\sum_{j}\bar K_\epsilon(x_i,x_j),
+\qquad
+\tilde K_\epsilon(x_i,x_j)=\frac{\bar K_\epsilon(x_i,x_j)}{q_\epsilon(x_i)\,q_\epsilon(x_j)},
+\qquad
+d_\epsilon(x_i)=\sum_j\tilde K_\epsilon(x_i,x_j),
+\]
+and define the discrete operator
+\begin{equation}\label{eq:discrete-laplacian}
+L_\epsilon f(x_i)
+=\frac{2}{\epsilon}\!\left[\frac{\sum_j\tilde K_\epsilon(x_i,x_j)f(x_j)}{d_\epsilon(x_i)}-f(x_i)\right].
+\end{equation}
+
+\begin{theorem}[Consistency of \(L_\epsilon\); via \citep{berry2016local}, Thm.~4.7]\label{thm:consistency}
+Let \(\mathbf{s}\in C^2(\M)\), and let \(K_\epsilon\) be defined by \eqref{eq:aniso-kernel}. Then for every \(f\in C^3(\M)\) and every \(x\in\M\),
+\[
+\lim_{\epsilon\to 0}\;\lim_{n\to\infty}\; L_\epsilon f(x_i)=\Delta_{\tilde g}f(x_i)+O(\epsilon),
+\]
+where \(\tilde g\) is the Riemannian metric on \(\M\) whose matrix in an orthonormal frame of \(T_x\M\) coincides with the tangential restriction of \(g(x)\). The limit does not depend on the sampling density \(q\).
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:moments}, \(K_\epsilon\) is a local kernel with \(\mu = 0\) and moments satisfying \(C(x)=m(x)\,A_T(x)\). These are exactly the hypotheses of Theorem~4.7 in \citep{berry2016local}: the symmetric double normalization \(\tilde K_\epsilon\) cancels both the sampling density \(q\) and the moment weight \(m(x)\), and the resulting operator \eqref{eq:discrete-laplacian} converges to the Laplace--Beltrami operator of the score based metric \(g\).
+\end{proof}
+
+\section{Method}\label{sec:method}
+
+Using $\mathbf{s}(x)$  build the metric tensor: 
+
+\[
+g = I - \frac{\mathbf{s}(x)\mathbf{s}(x)^\top}{1 + \|\mathbf{s}(x)\|^2}
+\]
+
+PSD kernel idea:
+
+
+
+\section{Experiments}\label{sec:exp}
+
+To verify the theoretical estimates obtained, we conducted a detailed empirical study...
+
+\section{Discussion}\label{sec:disc}
+
+TODO
+
+\section{Conclusion}\label{sec:concl}
+
+TODO
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{thebibliography}{99}
+
+\bibitem[Berry and Sauer(2016)]{berry2016local}
+T.~Berry and T.~Sauer.
+\newblock Local kernels and the geometric structure of data.
+\newblock \emph{Applied and Computational Harmonic Analysis}, 40(3):439--469, 2016.
+\newblock doi: \href{https://doi.org/10.1016/j.acha.2015.03.002}{10.1016/j.acha.2015.03.002}.
+
+\bibitem[Coifman and Lafon(2006)]{coifman2006diffusion}
+R.~R. Coifman and S.~Lafon.
+\newblock Diffusion maps.
+\newblock \emph{Applied and Computational Harmonic Analysis}, 21(1):5--30, 2006.
+\newblock doi: \href{https://doi.org/10.1016/j.acha.2006.04.006}{10.1016/j.acha.2006.04.006}.
+
+\bibitem[Perone(2024)]{perone2024scoremetric}
+C.~S. Perone.
+\newblock The geometry of data: the missing metric tensor and the Stein score [Part II].
+\newblock \emph{Terra Incognita}, 2024.
+\newblock \url{https://blog.christianperone.com/2024/11/the-geometry-of-data-part-ii/}.
+
+\bibitem[Song et~al.(2021)]{song2021scorebased}
+Y.~Song, J.~Sohl-Dickstein, D.~P. Kingma, A.~Kumar, S.~Ermon, and B.~Poole.
+\newblock Score-based generative modeling through stochastic differential equations.
+\newblock In \emph{International Conference on Learning Representations}, 2021.
+
+\bibitem[Ho et~al.(2020)]{ho2020denoising}
+J.~Ho, A.~Jain, and P.~Abbeel.
+\newblock Denoising diffusion probabilistic models.
+\newblock In \emph{Advances in Neural Information Processing Systems}, volume 33, pages 6840--6851, 2020.
+
+\bibitem[Stanczuk et~al.(2024)]{stanczuk2024diffusion}
+J.~P. Stanczuk, G.~Batzolis, T.~Deveney, and C.-B. Sch{\"o}nlieb.
+\newblock Diffusion models encode the intrinsic dimension of data manifolds.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, volume 235 of \emph{Proceedings of Machine Learning Research}, pages 46412--46440. PMLR, 2024.
+\newblock \url{https://proceedings.mlr.press/v235/stanczuk24a.html}.
+
+\bibitem[Kamkari et~al.(2024)]{kamkari2024geometric}
+H.~Kamkari, B.~L. Ross, R.~Hosseinzadeh, J.~C. Cresswell, and G.~Loaiza-Ganem.
+\newblock A geometric view of data complexity: Efficient local intrinsic dimension estimation with diffusion models.
+\newblock In \emph{Advances in Neural Information Processing Systems}, volume 37, 2024.
+\newblock doi: \href{https://doi.org/10.52202/079017-1211}{10.52202/079017-1211}.
+
+\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\appendix
+\section{Appendix / supplemental material}\label{app}
+
+\subsection{Additional experiments / Proofs of Theorems}\label{app:exp}
+
+TODO
+
+\end{document}
